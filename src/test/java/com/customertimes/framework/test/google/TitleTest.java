@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TitleTest {
 
     @Test
-    public void shouldAnswerWithTrue() {
+    public void checkSiteTitle() {
         open("https://google.com");
         assertThat($(By.cssSelector("link+title")).getOwnText()).isEqualTo("Google");
     }
