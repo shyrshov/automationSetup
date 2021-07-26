@@ -9,13 +9,13 @@ import org.testng.annotations.BeforeTest;
 
 public class BaseTest {
 
-    @BeforeClass
+    @BeforeTest
         public void beforeClassBaseTest() {
         WebDriver driver = new WebDriver();
         driver.setWebDriver("chrome");
     }
 
-    @AfterClass
+    @AfterTest
         public void afterClassBaseClass() {
             Selenide.closeWebDriver();
     }
