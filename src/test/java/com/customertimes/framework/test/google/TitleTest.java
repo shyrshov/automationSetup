@@ -7,12 +7,11 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppTest {
+public class TitleTest {
 
     @Test
     public void shouldAnswerWithTrue() {
         open("https://google.com");
         assertThat($(By.cssSelector("link+title")).getOwnText()).isEqualTo("Google");
-        System.out.println("Hello");
     }
 }
