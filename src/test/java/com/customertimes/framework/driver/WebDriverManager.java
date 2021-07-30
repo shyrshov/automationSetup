@@ -1,6 +1,6 @@
 package com.customertimes.framework.driver;
 
-public class WebDriver {
+public class WebDriverManager {
     public void setWebDriver (String browserName){
         switch (browserName){
             case "chrome":

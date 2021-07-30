@@ -1,17 +1,15 @@
 package com.customertimes.framework.test;
 
 import com.codeborne.selenide.Selenide;
-import com.customertimes.framework.driver.WebDriver;
-import org.testng.annotations.AfterClass;
+import com.customertimes.framework.driver.WebDriverManager;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 
 public class BaseTest {
 
     @BeforeTest
         public void beforeClassBaseTest() {
-        WebDriver driver = new WebDriver();
+        WebDriverManager driver = new WebDriverManager();
         driver.setWebDriver("chrome");
     }
 
