@@ -4,7 +4,7 @@
 <suite name="Suite" verbose="1" configfailurepolicy="continue" parallel="classes" thread-count="1">
     <test name="BaseSuite">
         <packages>
-            <package name="com.customertimes.*" >
+            <package name="com.rozetka.*" >
             </package>
         </packages>
     </test>

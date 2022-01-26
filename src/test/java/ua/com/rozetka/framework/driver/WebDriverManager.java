@@ -1,4 +1,4 @@
-package com.customertimes.framework.driver;
+package ua.com.rozetka.framework.driver;
 
 public class WebDriverManager {
     public void setWebDriver (String browserName){
