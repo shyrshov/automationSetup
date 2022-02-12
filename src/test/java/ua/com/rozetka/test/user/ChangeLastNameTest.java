@@ -1,20 +1,12 @@
 package ua.com.rozetka.test.user;
 
-import static com.codeborne.selenide.Selenide.open;
-
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import ua.com.rozetka.framework.modules.PersonDetailsSection;
 import ua.com.rozetka.framework.pages.HomePage;
 import ua.com.rozetka.test.BaseTest;
 
 public class ChangeLastNameTest extends BaseTest {
-
-	@BeforeTest
-	void openTestPage() {
-		open("/");
-	}
 
 	@Test
 		//captcha need to be handled manually, added sleep 10 sec
