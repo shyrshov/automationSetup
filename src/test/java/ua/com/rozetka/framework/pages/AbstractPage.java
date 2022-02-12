@@ -1,10 +1,9 @@
 package ua.com.rozetka.framework.pages;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static org.openqa.selenium.By.cssSelector;
+import java.time.Duration;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import ua.com.rozetka.framework.modules.CartModal;
@@ -14,49 +13,77 @@ import ua.com.rozetka.framework.modules.ProductsCompareModal;
 
 public abstract class AbstractPage {
 
-	private By
-			leftMenuIcon = cssSelector("button[aria-label='Открыть меню']"),
-			searchBar = cssSelector("div.header-search input"),
-			headerCartIcon = cssSelector("rz-cart button"),
-			headerCompareProductsButton = cssSelector("rz-comparison button"),
-			catalog = cssSelector("#fat-menu");
+	public static final Condition VISIBLE_AND_CLICKABLE = Condition.and("visible and clickable", Condition.visible, Condition.enabled);
 
+	private static final By LEFT_MENU_ICON = By.cssSelector("button[aria-label='Открыть меню']");
+
+	private static final By CATEGORY_LINK_FORMAT = By.cssSelector(".menu-categories__link");
+
+	private static final By SEARCH_BAR = By.cssSelector("div.header-search input");
+
+	private static final By HEADER_CART_ICON = By.cssSelector("rz-cart button");
+
+	private static final By HEADER_COMPARE_PRODUCTS_BUTTON = By.cssSelector("rz-comparison button");
+
+	private static final By CATALOG = By.cssSelector("#fat-menu");
+
+	public abstract <T extends AbstractPage> T contentLoaded();
 
 	@Step ("Click Left menu icon")
 	public LeftMenu openLeftMenu() {
-		$(leftMenuIcon).click();
-		return new LeftMenu();
+		Selenide.$(LEFT_MENU_ICON)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new LeftMenu().contentLoaded();
 	}
 
+
 	@Step ("Click on category from Category List on left page side")
-	public TopLevelCategoryPage selectCategoryFromList(String categoryName) {
-		$$(".menu-categories__link").findBy(text(categoryName)).click();
-		return new TopLevelCategoryPage();
+	public TopLevelCategoryPage selectCategoryFromList(final String categoryName) {
+		Selenide.$$(CATEGORY_LINK_FORMAT)
+				.findBy(Condition.text(categoryName))
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new TopLevelCategoryPage().contentLoaded();
 	}
 
 	@Step ("Search for product")
-	public SearchResultsPage searchForProduct(String productName) {
-		$(searchBar).setValue(productName).pressEnter();
-		return new SearchResultsPage();
+	public SearchResultsPage searchForProduct(final String productName) {
+		Selenide.$(SEARCH_BAR)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.setValue(productName)
+				.pressEnter();
+		return new SearchResultsPage().contentLoaded();
 	}
 
 	@Step ("Click on header Cart button")
 	public CartModal clickHeaderCartButton() {
-		$(headerCartIcon).click();
-		return new CartModal();
+		Selenide.$(HEADER_CART_ICON)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new CartModal().contentLoaded();
 	}
 
 	@Step ("Open product Catalog")
 	public CatalogModal openCatalog() {
-		$(catalog).click();
-		return new CatalogModal();
+		Selenide.$(CATALOG)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new CatalogModal().contentLoaded();
 	}
 
 	@Step ("Open Products compare page")
 	public ProductsCompareModal openProductsCompare() {
-		$(headerCompareProductsButton).click();
-		return new ProductsCompareModal();
+		Selenide.$(HEADER_COMPARE_PRODUCTS_BUTTON)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new ProductsCompareModal().contentLoaded();
 	}
 
-	public abstract void openPage();
 }

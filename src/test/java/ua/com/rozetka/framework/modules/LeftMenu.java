@@ -1,29 +1,41 @@
 package ua.com.rozetka.framework.modules;
 
-import static com.codeborne.selenide.Selenide.$;
-import static org.openqa.selenium.By.cssSelector;
-import static org.openqa.selenium.By.xpath;
+import java.time.Duration;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import ua.com.rozetka.framework.pages.UserDetailsPage;
 
-public class LeftMenu {
+public class LeftMenu extends AbstractModule{
 
-	private final By
-			loginButton = xpath("//button[text()=' Вход ']"),
-			userName = cssSelector("a.side-menu__user-name");
+	private static final By LOGIN_BUTTON = By.xpath("//button[text()=' Вход ']");
+
+	private static final By USER_NAME = By.cssSelector("a.side-menu__user-name");
 
 	@Step ("Click Login button")
 	public LoginForm clickLoginButton() {
-		$(loginButton).click();
-		return new LoginForm();
+		Selenide.$(LOGIN_BUTTON)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new LoginForm().contentLoaded();
 	}
 
 	@Step ("Click User name for authorized user")
 	public UserDetailsPage clickUserName() {
-		$(userName).click();
-		return new UserDetailsPage();
+		Selenide.$(USER_NAME)
+				.waitUntil(VISIBLE_AND_CLICKABLE, Duration.ofSeconds(5).toMillis())
+				.scrollIntoView(false)
+				.click();
+		return new UserDetailsPage().contentLoaded();
+	}
 
+	@Override
+	public LeftMenu contentLoaded() {
+		Selenide.$(PAGE_PRE_LOADER).should(Condition.disappear);
+		Selenide.$(PRE_LOADERS).should(Condition.disappear);
+		return this;
 	}
 }

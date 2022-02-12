@@ -2,10 +2,19 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="Suite" verbose="1" configfailurepolicy="continue" parallel="classes" thread-count="1">
-    <test name="BaseSuite">
-        <packages>
-            <package name="com.rozetka.*" >
-            </package>
-        </packages>
+    <listeners>
+        <listener class-name="ua.com.rozetka.framework.listeners.TestListener"></listener>
+    </listeners>
+    <test name="CustomTests">
+        <classes>
+            <class name="ua.com.rozetka.test.category.DisplayProductListTest" />
+            <class name="ua.com.rozetka.test.purchase.SearchAndAddToCartTest" />
+        </classes>
     </test>
+<!--    <test name="BaseSuite">-->
+<!--        <packages>-->
+<!--            <package name="ua.com.rozetka.test.category.*" >-->
+<!--            </package>-->
+<!--        </packages>-->
+<!--    </test>-->
 </suite>

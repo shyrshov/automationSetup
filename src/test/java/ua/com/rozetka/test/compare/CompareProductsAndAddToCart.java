@@ -1,9 +1,6 @@
 package ua.com.rozetka.test.compare;
 
-import static com.codeborne.selenide.Selenide.open;
-
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import ua.com.rozetka.framework.pages.CheckoutPage;
 import ua.com.rozetka.framework.pages.HomePage;
@@ -11,11 +8,6 @@ import ua.com.rozetka.framework.pages.ProductComparePage;
 import ua.com.rozetka.test.BaseTest;
 
 public class CompareProductsAndAddToCart extends BaseTest {
-
-	@BeforeTest
-	void openTestPage() {
-		open("/");
-	}
 
 	@Test
 	void compareProductsAndAddToCart() {
@@ -37,11 +29,14 @@ public class CompareProductsAndAddToCart extends BaseTest {
 
 		int productPosition = productComparePage.getProductPositionWithLowerValue(compareBlock);
 		String productName = productComparePage.getProductNameByProductPosition(productPosition);
+		String productPrice = productComparePage.getProductPriceByProductPosition(productPosition);
 
 		productComparePage.addProductToCartByProductPosition(productPosition)
 						  .clickHeaderCartButton()
 						  .clickCheckoutButton();
 
 		Assert.assertTrue(new CheckoutPage().isProductInCart(productName));
+		Assert.assertEquals(productName, (new CheckoutPage().getProductNames().get(0)));
+		Assert.assertEquals(productPrice, (new CheckoutPage().getProductPrices().get(0)));
 	}
 }
